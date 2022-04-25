@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import LandingPage from "./screens/LandingPage";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import About from "./screens/About";
+import Search from "./screens/Search";
+import { Signup } from "./screens/auth/Signup";
+import { Login } from "./screens/auth/Login";
+import Quizzes from "./screens/Quizzes";
 
-function App() {
+const theme = extendTheme({
+  styles: {
+    global: {
+      body: {
+        userSelect: "none",
+      },
+    },
+  },
+});
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ChakraProvider theme={theme}>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/home" component={LandingPage} />
+          <Route path="/about" component={About} />
+          <Route path="/search" component={Search} />
+          <Route path="/quizzes" component={Quizzes} />
+
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Redirect from="*" exact={true} to={"/home"} />
+        </Switch>
+      </BrowserRouter>
+    </ChakraProvider>
   );
-}
+};
 
 export default App;
