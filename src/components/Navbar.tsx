@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { userID } from "../helpers/auth";
 import { isMobile } from "../helpers/mobile";
 
 const Navbar = ({
@@ -74,10 +75,15 @@ const Navbar = ({
             ))}
             <MenuItem
               onClick={() => {
-                window.location.href = "/login";
+                if (userID) {
+                  localStorage.removeItem("USER");
+                  window.location.reload();
+                } else {
+                  window.location.href = "/login";
+                }
               }}
             >
-              logga in
+              {userID ? "logga ut" : "logga in"}
             </MenuItem>
           </MenuList>
         </Menu>
@@ -112,7 +118,12 @@ const Navbar = ({
           <Flex
             cursor="pointer"
             onClick={() => {
-              window.location.href = "/login";
+              if (userID) {
+                localStorage.removeItem("USER");
+                window.location.reload();
+              } else {
+                window.location.href = "/login";
+              }
             }}
             marginInline={8}
           >
@@ -121,7 +132,7 @@ const Navbar = ({
               fontSize={isMobile ? 15 : 18}
               fontWeight="semibold"
             >
-              logga in
+              {userID ? "logga ut" : "logga in"}
             </Text>
           </Flex>
         </>

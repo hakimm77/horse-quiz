@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import LandingPage from "./screens/LandingPage";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -19,6 +19,8 @@ const theme = extendTheme({
 });
 
 const App = () => {
+  const [userID, setUserID] = useState(localStorage.getItem("USER"));
+
   return (
     <ChakraProvider theme={theme}>
       <BrowserRouter>
@@ -27,9 +29,13 @@ const App = () => {
           <Route path="/about" component={About} />
           <Route path="/search" component={Search} />
           <Route path="/quizzes" component={Quizzes} />
-
-          <Route path="/signup" component={Signup} />
-          <Route path="/login" component={Login} />
+          {!userID && (
+            <Switch>
+              <Route path="/signup" component={Signup} />
+              <Route path="/login" component={Login} />
+              {/* <Redirect from="*" exact={true} to={"/home"} /> */}
+            </Switch>
+          )}
           <Redirect from="*" exact={true} to={"/home"} />
         </Switch>
       </BrowserRouter>
