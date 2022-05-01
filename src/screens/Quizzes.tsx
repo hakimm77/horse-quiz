@@ -185,6 +185,9 @@ const Quizzes = () => {
                   marginRight={isMobile ? "8px" : 15}
                   marginBottom={isMobile ? "8px" : 15}
                   cursor="pointer"
+                  onClick={() => {
+                    window.location.href = `/quiz/this is test quiz`;
+                  }}
                 >
                   <Text
                     color="white"

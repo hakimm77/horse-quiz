@@ -7,12 +7,15 @@ import Search from "./screens/Search";
 import { Signup } from "./screens/auth/Signup";
 import { Login } from "./screens/auth/Login";
 import Quizzes from "./screens/Quizzes";
+import QuizPage from "./screens/QuizPage";
+import PaymentScreen from "./screens/PaymentScreen";
 
 const theme = extendTheme({
   styles: {
     global: {
       body: {
         userSelect: "none",
+        userDrag: "none",
       },
     },
   },
@@ -29,6 +32,8 @@ const App = () => {
           <Route path="/about" component={About} />
           <Route path="/search" component={Search} />
           <Route path="/quizzes" component={Quizzes} />
+          <Route path="/quiz/:name" component={QuizPage} />
+          <Route path="/payment/:id" component={PaymentScreen} />
           {!userID && (
             <Switch>
               <Route path="/signup" component={Signup} />
