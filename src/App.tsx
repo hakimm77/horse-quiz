@@ -8,7 +8,8 @@ import { Signup } from "./screens/auth/Signup";
 import { Login } from "./screens/auth/Login";
 import Quizzes from "./screens/Quizzes";
 import QuizPage from "./screens/QuizPage";
-import PaymentScreen from "./screens/PaymentScreen";
+import AdminPage from "./screens/AdminPage";
+import AddQuiz from "./screens/AddQuiz";
 
 const theme = extendTheme({
   styles: {
@@ -33,12 +34,14 @@ const App = () => {
           <Route path="/search" component={Search} />
           <Route path="/quizzes" component={Quizzes} />
           <Route path="/quiz/:name" component={QuizPage} />
-          <Route path="/payment/:id" component={PaymentScreen} />
+
+          <Route path="/admin-page" component={AdminPage} />
+          <Route path="/add-quiz-page" component={AddQuiz} />
           {!userID && (
             <Switch>
               <Route path="/signup" component={Signup} />
               <Route path="/login" component={Login} />
-              {/* <Redirect from="*" exact={true} to={"/home"} /> */}
+              <Redirect from="*" exact={true} to={"/home"} />
             </Switch>
           )}
           <Redirect from="*" exact={true} to={"/home"} />
