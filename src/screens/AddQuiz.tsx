@@ -97,7 +97,7 @@ const AddQuiz = () => {
           placeholder="Name for quiz"
           _placeholder={{ color: "#225843" }}
           mb={10}
-          onChange={(e) => {
+          onChange={(e: any) => {
             setQuizName(e.target.value);
           }}
         />
@@ -107,7 +107,7 @@ const AddQuiz = () => {
           placeholder="Price for quiz"
           _placeholder={{ color: "#225843" }}
           mb={10}
-          onChange={(e) => {
+          onChange={(e: any) => {
             setQuizPrice(e.target.value);
           }}
         />
@@ -118,7 +118,7 @@ const AddQuiz = () => {
           width="90%"
           color="#225843"
           borderColor="#225843"
-          onChange={(e) => {
+          onChange={(e: any) => {
             setQuizLevel(e.target.value);
           }}
         >
@@ -128,7 +128,7 @@ const AddQuiz = () => {
         </Select>
 
         <Textarea
-          onChange={(e) => {
+          onChange={(e: any) => {
             setQuizDescription(e.target.value);
           }}
           width="90%"
@@ -161,7 +161,7 @@ const AddQuiz = () => {
               _placeholder={{ color: "#225843" }}
               value={question.question}
               mb={5}
-              onChange={(e) => {
+              onChange={(e: any) => {
                 updateState(questionIdx, 0, "questionText", e.target.value);
               }}
             />
@@ -177,7 +177,7 @@ const AddQuiz = () => {
                   borderColor="#225843"
                   placeholder={`choice ${choiceIdx + 1}`}
                   _placeholder={{ color: "#225843" }}
-                  onChange={(e) => {
+                  onChange={(e: any) => {
                     updateState(
                       questionIdx,
                       choiceIdx,

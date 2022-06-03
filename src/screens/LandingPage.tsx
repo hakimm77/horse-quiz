@@ -91,7 +91,14 @@ const LandingPage = () => {
             hästintresserade & experter i hästkunskap.
           </Text>
 
-          <Button width={"80%"} height="50px" backgroundColor="#efbcc8">
+          <Button
+            width={"80%"}
+            height="50px"
+            backgroundColor="#efbcc8"
+            onClick={() => {
+              window.location.href = "/quizzes";
+            }}
+          >
             <Text color="#225843" fontSize={20}>
               Utforska våra quiz
             </Text>
@@ -105,23 +112,6 @@ const LandingPage = () => {
           width={isMobile ? "95%" : "60%"}
           mb={isMobile ? "50px" : 0}
         >
-          {/* <Flex flexDir="row" minWidth="100%" overflowX="auto">
-            {profiles.map((item, idx) => (
-              <Flex key={idx} position="relative" cursor="pointer">
-                <>
-                  <Image
-                    src={require("../assets/example-profile.jpg")}
-                    minHeight="270px"
-                    minWidth="190px"
-                    objectFit="cover"
-                    borderRadius={10}
-                    mr={5}
-                  />
-                </>
-              </Flex>
-            ))}
-          </Flex> */}
-
           <div
             style={{
               padding: isMobile ? 0 : "0 60px",

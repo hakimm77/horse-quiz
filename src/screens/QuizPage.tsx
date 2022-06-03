@@ -75,8 +75,7 @@ const QuizPage = ({ match }: { match: any }) => {
           width={200}
           mb={10}
           onClick={() => {
-            window.location.href =
-              "https://buy.stripe.com/test_cN23d726UeOUdBmcMM";
+            window.location.href = `/payment/123456`;
           }}
         >
           Buy quiz

@@ -10,6 +10,7 @@ import Quizzes from "./screens/Quizzes";
 import QuizPage from "./screens/QuizPage";
 import AdminPage from "./screens/AdminPage";
 import AddQuiz from "./screens/AddQuiz";
+import PaymentScreen from "./screens/PaymentScreen";
 
 const theme = extendTheme({
   styles: {
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/search" component={Search} />
           <Route path="/quizzes" component={Quizzes} />
           <Route path="/quiz/:name" component={QuizPage} />
+          <Route path="/payment/:id" component={PaymentScreen} />
 
           <Route path="/admin-page" component={AdminPage} />
           <Route path="/add-quiz-page" component={AddQuiz} />

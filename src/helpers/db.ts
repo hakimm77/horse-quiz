@@ -1,5 +1,6 @@
-import { addDoc, collection } from "firebase/firestore";
-import { QuestionsType } from "../../types/appTypes";
+import { addDoc, collection, getDocs } from "firebase/firestore";
+import React from "react";
+import { QuestionsType, QuizType } from "../../types/appTypes";
 import { db } from "./firebase";
 
 export const addQuiz = (
@@ -21,7 +22,25 @@ export const addQuiz = (
     });
 
     console.log("done");
+    window.location.href = "/admin-page";
   } else {
     alert("Plese fill up all inputs");
   }
+};
+
+export const getQuizzes = async (
+  setQuizzes: React.Dispatch<
+    React.SetStateAction<Array<QuizType> | Array<undefined>>
+  >
+) => {
+  let arr: Array<QuizType> = [];
+
+  await getDocs(collection(db, "quizzes")).then((snapchot) => {
+    snapchot.forEach(async (childSnapchot) => {
+      arr = [...arr, childSnapchot.data() as QuizType];
+    });
+  });
+
+  console.log(arr);
+  setQuizzes(arr);
 };
