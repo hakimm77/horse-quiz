@@ -13,28 +13,6 @@ import Navbar from "../components/Navbar";
 import { QuestionsType } from "../../types/appTypes";
 import { addQuiz } from "../helpers/db";
 
-const questionBoilerPlate = {
-  question: "",
-  choices: [
-    {
-      choiceText: "",
-      isCorrect: false,
-    },
-    {
-      choiceText: "",
-      isCorrect: false,
-    },
-    {
-      choiceText: "",
-      isCorrect: false,
-    },
-    {
-      choiceText: "",
-      isCorrect: false,
-    },
-  ],
-};
-
 const AddQuiz = () => {
   const [questions, setQuestions] = useState<Array<QuestionsType>>([
     {
@@ -77,9 +55,7 @@ const AddQuiz = () => {
         let previousValue =
           newState[questionIndex].choices[choiceIndex].isCorrect;
 
-        newState[questionIndex].choices[choiceIndex].isCorrect = previousValue
-          ? false
-          : true;
+        newState[questionIndex].choices[choiceIndex].isCorrect = !previousValue;
         break;
       case "questionText":
         newState[questionIndex].question = value as string;
@@ -225,7 +201,30 @@ const AddQuiz = () => {
             color="#efbcc8"
             fontSize={20}
             onClick={() => {
-              setQuestions((p) => [...p, questionBoilerPlate]);
+              setQuestions((p) => [
+                ...p,
+                {
+                  question: "",
+                  choices: [
+                    {
+                      choiceText: "",
+                      isCorrect: false,
+                    },
+                    {
+                      choiceText: "",
+                      isCorrect: false,
+                    },
+                    {
+                      choiceText: "",
+                      isCorrect: false,
+                    },
+                    {
+                      choiceText: "",
+                      isCorrect: false,
+                    },
+                  ],
+                },
+              ]);
             }}
           >
             Add question
