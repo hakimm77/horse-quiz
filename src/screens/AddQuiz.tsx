@@ -37,7 +37,27 @@ const questionBoilerPlate = {
 
 const AddQuiz = () => {
   const [questions, setQuestions] = useState<Array<QuestionsType>>([
-    questionBoilerPlate,
+    {
+      question: "",
+      choices: [
+        {
+          choiceText: "",
+          isCorrect: false,
+        },
+        {
+          choiceText: "",
+          isCorrect: false,
+        },
+        {
+          choiceText: "",
+          isCorrect: false,
+        },
+        {
+          choiceText: "",
+          isCorrect: false,
+        },
+      ],
+    },
   ]);
   const [quizName, setQuizName] = useState<string>("");
   const [quizDescription, setQuizDescription] = useState<string>("");
@@ -144,6 +164,7 @@ const AddQuiz = () => {
 
         {questions.map((question, questionIdx) => (
           <Flex
+            key={questionIdx}
             flexDir="column"
             mb={20}
             borderColor="#225843"

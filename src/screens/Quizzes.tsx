@@ -105,7 +105,7 @@ const Quizzes = () => {
         >
           {!isMobile && (
             <Flex flexDir="column" width="25%">
-              {[1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
+              {["Purchased quizzes", 1, 2, 3, 4, 5, 6, 7].map((item, idx) => (
                 <Flex
                   flexDir="row"
                   margin="20px"
@@ -186,7 +186,7 @@ const Quizzes = () => {
                   marginBottom={isMobile ? "8px" : 15}
                   cursor="pointer"
                   onClick={() => {
-                    window.location.href = `/quiz/this is test quiz`;
+                    window.location.href = `/play-quiz/this is test quiz`; //change this later to purchased and non purchased
                   }}
                 >
                   <Text

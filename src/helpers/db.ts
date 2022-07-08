@@ -1,9 +1,16 @@
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import React from "react";
 import { QuestionsType, QuizType } from "../../types/appTypes";
 import { db } from "./firebase";
 
-export const addQuiz = (
+export const addQuiz = async (
   name: string,
   description: string,
   price: string,
@@ -11,14 +18,16 @@ export const addQuiz = (
   questions: Array<QuestionsType>
 ) => {
   console.log(name, description, price, level);
+  const id = performance.now();
 
   if (name && description && price && level) {
-    addDoc(collection(db, "quizzes"), {
+    await setDoc(doc(db, `quizzes/${id}`), {
       name: name,
       description: description,
       price: price,
       level: level,
       questions: questions,
+      id: id,
     });
 
     console.log("done");
@@ -43,4 +52,10 @@ export const getQuizzes = async (
 
   console.log(arr);
   setQuizzes(arr);
+};
+
+export const getQuiz = async (id: string): Promise<QuizType> => {
+  return await getDoc(doc(db, `quizzes/${id}`)).then(
+    (snapchot) => snapchot.data() as QuizType
+  );
 };
