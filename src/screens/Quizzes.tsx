@@ -186,7 +186,7 @@ const Quizzes = () => {
                   marginBottom={isMobile ? "8px" : 15}
                   cursor="pointer"
                   onClick={() => {
-                    window.location.href = `/play-quiz/this is test quiz`; //change this later to purchased and non purchased
+                    window.location.href = `/play-quiz/137625`; //change this later to purchased and non purchased
                   }}
                 >
                   <Text

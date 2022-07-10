@@ -1,25 +1,46 @@
-import { Button, Container, Flex, Text, usePrevious } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  Container,
+  Flex,
+  Heading,
+  Text,
+  usePrevious,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { getQuiz } from "../helpers/db";
 import { QuizType } from "../../types/appTypes";
 import Navbar from "../components/Navbar";
+import { Loading } from "../components/Loading";
 
 const PlayQuiz = ({ match }: { match: any }) => {
   const [quizID, setQuizID] = useState(match.params.id);
   const [quiz, setQuiz] = useState<QuizType>();
   const [questionIdx, setQuestionIdx] = useState(0);
+  const [answers, setAnswers] = useState<number[]>([]);
 
   useEffect(() => {
-    getQuiz(quizID).then((snapchot) => {
-      setQuiz(snapchot as any);
+    getQuiz(quizID).then(async (snapchot) => {
+      await setQuiz(snapchot as any);
     });
   }, []);
 
   const moveNextQuestion = () => {
     if (quiz && questionIdx !== quiz?.questions.length - 1) {
-      setQuestionIdx((previousIdx) => previousIdx + 1);
+      if (typeof answers[questionIdx] !== "undefined") {
+        setQuestionIdx((previousIdx) => previousIdx + 1);
+      } else {
+        alert("Choose an answer to continue");
+      }
     }
   };
+
+  const chooseAnswer = async (choiceIdx: number) => {
+    let answerList = [...answers];
+    answerList[questionIdx] = choiceIdx;
+
+    setAnswers(answerList);
+  }; //fix calculating good answers and returning a percentage
 
   return (
     <Flex
@@ -31,14 +52,51 @@ const PlayQuiz = ({ match }: { match: any }) => {
     >
       <Navbar marginBottom="20px" color="#fff" />
 
-      <Container bgColor="#fff">
-        <Text mb={20}>{quiz?.questions[questionIdx].question}</Text>
-        {quiz?.questions[questionIdx].choices.map((choice, idx) => (
-          <Text key={idx}>{choice.choiceText}</Text>
-        ))}
+      {quiz ? (
+        <Flex
+          flexDirection="column"
+          bgColor="#fff"
+          padding={5}
+          width="55%"
+          height="60%"
+          justifyContent="center"
+          alignItems="center"
+          borderRadius={10}
+        >
+          <Heading mb={20}>{quiz?.questions[questionIdx].question}</Heading>
 
-        <Button onClick={moveNextQuestion}>submit</Button>
-      </Container>
+          <Flex flexDirection="column" mb={10}>
+            {quiz?.questions[questionIdx].choices.map((choice, choiceIdx) => (
+              <Flex key={choiceIdx} flexDir="row" alignItems="center">
+                <Checkbox
+                  borderColor="#1D1D1D"
+                  padding={3}
+                  onChange={(e: any) => {
+                    chooseAnswer(choiceIdx);
+                  }}
+                  isChecked={answers[questionIdx] === choiceIdx}
+                />
+                <Text fontSize={23}>{choice.choiceText}</Text>
+              </Flex>
+            ))}
+          </Flex>
+
+          <Button
+            width={100}
+            height={50}
+            onClick={moveNextQuestion}
+            backgroundColor="#1D1D1D"
+            color="#fff"
+          >
+            {questionIdx === quiz.questions.length - 1 ? "submit" : "next"}
+          </Button>
+          <Text fontSize={23} color="#1D1D1D">{`${questionIdx + 1} / ${
+            quiz?.questions.length
+          }`}</Text>
+        </Flex>
+      ) : (
+        <Loading />
+      )}
     </Flex>
   );
 };
