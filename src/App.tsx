@@ -32,13 +32,12 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/home" component={LandingPage} />
-          <Route path="/about" component={About} />
+          <Route path="/about" component={About} />z
           <Route path="/search" component={Search} />
           <Route path="/quizzes" component={Quizzes} />
           <Route path="/quiz/:name" component={QuizPage} />
           <Route path="/play-quiz/:id" component={PlayQuiz} />
           <Route path="/payment/:id" component={PaymentScreen} />
-
           <Route path="/admin-page" component={AdminPage} />
           <Route path="/add-quiz-page" component={AddQuiz} />
           {!userID && (

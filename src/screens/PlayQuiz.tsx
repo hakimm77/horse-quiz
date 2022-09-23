@@ -18,10 +18,11 @@ const PlayQuiz = ({ match }: { match: any }) => {
   const [quiz, setQuiz] = useState<QuizType>();
   const [questionIdx, setQuestionIdx] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
+  const [results, setResults] = useState<any>([]);
 
   useEffect(() => {
     getQuiz(quizID).then(async (snapchot) => {
-      await setQuiz(snapchot as any);
+      setQuiz(snapchot as any);
     });
   }, []);
 
@@ -32,15 +33,29 @@ const PlayQuiz = ({ match }: { match: any }) => {
       } else {
         alert("Choose an answer to continue");
       }
+    } else {
+      answers.forEach((item) => {
+        setResults((p: any) => [
+          ...p,
+          {
+            [answers.indexOf(item)]:
+              quiz?.questions[answers.indexOf(item)].choices[item].isCorrect,
+          },
+        ]);
+      });
     }
-  };
+  }; //fixxxxx
 
   const chooseAnswer = async (choiceIdx: number) => {
     let answerList = [...answers];
     answerList[questionIdx] = choiceIdx;
 
     setAnswers(answerList);
-  }; //fix calculating good answers and returning a percentage
+  };
+
+  useEffect(() => {
+    console.log(results);
+  }, [results]);
 
   return (
     <Flex
@@ -53,47 +68,62 @@ const PlayQuiz = ({ match }: { match: any }) => {
       <Navbar marginBottom="20px" color="#fff" />
 
       {quiz ? (
-        <Flex
-          flexDirection="column"
-          bgColor="#fff"
-          padding={5}
-          width="55%"
-          height="60%"
-          justifyContent="center"
-          alignItems="center"
-          borderRadius={10}
-        >
-          <Heading mb={20}>{quiz?.questions[questionIdx].question}</Heading>
-
-          <Flex flexDirection="column" mb={10}>
-            {quiz?.questions[questionIdx].choices.map((choice, choiceIdx) => (
-              <Flex key={choiceIdx} flexDir="row" alignItems="center">
-                <Checkbox
-                  borderColor="#1D1D1D"
-                  padding={3}
-                  onChange={(e: any) => {
-                    chooseAnswer(choiceIdx);
-                  }}
-                  isChecked={answers[questionIdx] === choiceIdx}
-                />
-                <Text fontSize={23}>{choice.choiceText}</Text>
-              </Flex>
-            ))}
-          </Flex>
-
-          <Button
-            width={100}
-            height={50}
-            onClick={moveNextQuestion}
-            backgroundColor="#1D1D1D"
-            color="#fff"
+        results ? (
+          <Flex
+            flexDirection="column"
+            bgColor="#fff"
+            padding={5}
+            width="55%"
+            height="60%"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius={10}
           >
-            {questionIdx === quiz.questions.length - 1 ? "submit" : "next"}
-          </Button>
-          <Text fontSize={23} color="#1D1D1D">{`${questionIdx + 1} / ${
-            quiz?.questions.length
-          }`}</Text>
-        </Flex>
+            <Heading mb={20}>{quiz?.questions[questionIdx].question}</Heading>
+
+            <Flex flexDirection="column" mb={10}>
+              {quiz?.questions[questionIdx].choices.map((choice, choiceIdx) => (
+                <Flex key={choiceIdx} flexDir="row" alignItems="center">
+                  <Checkbox
+                    borderColor="#1D1D1D"
+                    padding={3}
+                    onChange={(e: any) => {
+                      chooseAnswer(choiceIdx);
+                    }}
+                    isChecked={answers[questionIdx] === choiceIdx}
+                  />
+                  <Text fontSize={23}>{choice.choiceText}</Text>
+                </Flex>
+              ))}
+            </Flex>
+
+            <Button
+              width={100}
+              height={50}
+              onClick={moveNextQuestion}
+              backgroundColor="#1D1D1D"
+              color="#fff"
+            >
+              {questionIdx === quiz.questions.length - 1 ? "submit" : "next"}
+            </Button>
+            <Text fontSize={23} color="#1D1D1D">{`${questionIdx + 1} / ${
+              quiz?.questions.length
+            }`}</Text>
+          </Flex>
+        ) : (
+          <Flex
+            flexDirection="column"
+            bgColor="#fff"
+            padding={5}
+            width="55%"
+            height="60%"
+            justifyContent="center"
+            alignItems="center"
+            borderRadius={10}
+          >
+            <Text>hyebye</Text>
+          </Flex>
+        )
       ) : (
         <Loading />
       )}
